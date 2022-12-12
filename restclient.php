@@ -58,35 +58,42 @@ class RestClient implements Iterator, ArrayAccess {
     }
     
     // Iterable methods:
+    #[\ReturnTypeWillChange]
     public function rewind() : void {
         $this->decode_response();
         reset($this->decoded_response);
     }
     
+    #[\ReturnTypeWillChange]
     public function current() : mixed {
         return current($this->decoded_response);
     }
     
+    #[\ReturnTypeWillChange]
     public function key() : mixed {
         return key($this->decoded_response);
     }
     
+    #[\ReturnTypeWillChange]
     public function next() : void {
         next($this->decoded_response);
     }
     
+    #[\ReturnTypeWillChange]
     public function valid() : bool {
         return is_array($this->decoded_response)
             && (key($this->decoded_response) !== NULL);
     }
     
     // ArrayAccess methods:
+    #[\ReturnTypeWillChange]
     public function offsetExists($key) : bool {
         $this->decode_response();
         return is_array($this->decoded_response)?
             isset($this->decoded_response[$key]) : isset($this->decoded_response->{$key});
     }
     
+    #[\ReturnTypeWillChange]
     public function offsetGet($key) : mixed {
         $this->decode_response();
         if(!$this->offsetExists($key))
@@ -96,10 +103,12 @@ class RestClient implements Iterator, ArrayAccess {
             $this->decoded_response[$key] : $this->decoded_response->{$key};
     }
     
+    #[\ReturnTypeWillChange]
     public function offsetSet($key, $value) : void {
         throw new RestClientException("Decoded response data is immutable.");
     }
     
+    #[\ReturnTypeWillChange]
     public function offsetUnset($key) : void {
         throw new RestClientException("Decoded response data is immutable.");
     }
